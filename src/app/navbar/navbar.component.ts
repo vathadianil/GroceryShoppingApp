@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AppUser } from '../models/appUser.model';
 import { AuthService } from '../service/auth.service';
 
 @Component({
@@ -6,12 +8,22 @@ import { AuthService } from '../service/auth.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit {
-  constructor(public auth: AuthService) {}
+export class NavbarComponent implements OnInit, OnDestroy {
+  appUser: AppUser;
+  appUserSubscription: Subscription;
+  constructor(private auth: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.appUserSubscription = this.auth.appUsers$.subscribe((appUser) => {
+      this.appUser = appUser;
+    });
+  }
 
   logout() {
     return this.auth.logout();
+  }
+
+  ngOnDestroy(): void {
+    this.appUserSubscription.unsubscribe();
   }
 }
