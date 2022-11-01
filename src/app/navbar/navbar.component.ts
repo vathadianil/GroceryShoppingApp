@@ -11,16 +11,18 @@ import { AuthService } from '../service/auth.service';
 export class NavbarComponent implements OnInit, OnDestroy {
   appUser: AppUser;
   appUserSubscription: Subscription;
-  constructor(private auth: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.appUserSubscription = this.auth.appUsers$.subscribe((appUser) => {
-      this.appUser = appUser;
-    });
+    this.appUserSubscription = this.authService.appUsers$.subscribe(
+      (appUser) => {
+        this.appUser = appUser;
+      }
+    );
   }
 
   logout() {
-    return this.auth.logout();
+    return this.authService.logout();
   }
 
   ngOnDestroy(): void {

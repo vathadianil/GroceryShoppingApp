@@ -7,16 +7,12 @@ import {
 } from '@angular/router';
 import { map, Observable, switchMap } from 'rxjs';
 import { AuthService } from './auth.service';
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminAuthGaurdService implements CanActivate {
-  constructor(
-    private authService: AuthService,
-    private userService: UserService
-  ) {}
+  constructor(private authService: AuthService) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -25,6 +21,7 @@ export class AdminAuthGaurdService implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
+    this.authService.appUsers$.pipe(map((user) => console.log(user)));
     return this.authService.appUsers$.pipe(map((user) => user.isAdmin));
   }
 }
