@@ -4,6 +4,7 @@ import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { FormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ng2-validation';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,6 +41,7 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
     AppRoutingModule,
     NgbModule,
     FormsModule,
+    CustomFormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
   ],
   providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
