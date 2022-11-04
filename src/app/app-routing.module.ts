@@ -44,6 +44,11 @@ const routes: Routes = [
     canActivate: [AuthGaurdService, AdminAuthGaurdService],
   },
   {
+    path: 'admin/products/:id',
+    component: ProductFormComponent,
+    canActivate: [AuthGaurdService, AdminAuthGaurdService],
+  },
+  {
     path: 'admin/orders',
     component: AdminOrdersComponent,
     canActivate: [AuthGaurdService, AdminAuthGaurdService],

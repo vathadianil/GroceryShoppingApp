@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authUserSubscription = this.auth.user$.subscribe((user) => {
       if (user) {
         this.userService.save(user);
-        let returnUrl = localStorage.getItem('returnUrl');
+        let returnUrl = localStorage.getItem('returnUrl') || '/';
         this.router.navigate([returnUrl]);
       }
     });

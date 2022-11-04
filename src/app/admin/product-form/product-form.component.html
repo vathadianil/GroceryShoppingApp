@@ -7,7 +7,7 @@
           #title="ngModel"
           id="title"
           type="text"
-          ngModel
+          [(ngModel)]="product.title"
           name="title"
           class="form-control"
           required
@@ -52,6 +52,7 @@
           #category="ngModel"
           required
         >
+          <option value="">Choose category</option>
           <option *ngFor="let c of categories$ | async" [value]="c.payload.key">
             {{ c.payload.val().name }}
           </option>
