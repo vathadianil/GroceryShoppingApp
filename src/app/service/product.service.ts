@@ -20,4 +20,11 @@ export class ProductService {
       .list('/products/', (ref) => ref.orderByKey().equalTo(productId))
       .valueChanges();
   }
+  update(productId, product) {
+    return this.db.list('/products/').update(productId, product);
+  }
+
+  delete(productId) {
+    return this.db.list('/products/').remove(productId);
+  }
 }
