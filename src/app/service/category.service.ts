@@ -10,7 +10,7 @@ export class CategoryService {
 
   getCategories() {
     return this.db
-      .list('/catagories', (ref) => ref.orderByChild('name'))
+      .list('/categories', (ref) => ref.orderByChild('name'))
       .snapshotChanges();
   }
 }

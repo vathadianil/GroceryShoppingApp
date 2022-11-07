@@ -4,6 +4,22 @@
   >
 </p>
 
+<p>
+  <input
+    #filter
+    (keyup)="search(filter.value)"
+    type="text"
+    class="form-control"
+    placeholder="Search...."
+  />
+</p>
+
+<!-- <data-table
+  [items]="items"
+  [itemCount]="itemCount"
+  (reload)="reloadItems($event)"
+></data-table> -->
+
 <table class="table">
   <thead>
     <tr>
@@ -13,11 +29,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let p of products$ | async">
-      <td>{{ p.payload.val()?.title }}</td>
-      <td>{{ p.payload.val()?.price }}</td>
+    <tr *ngFor="let p of filteredProducts">
+      <td>{{ p.title }}</td>
+      <td>{{ p.price }}</td>
       <td>
-        <a [routerLink]="['/admin/products', p.payload?.key]">Edit</a>
+        <a [routerLink]="['/admin/products', p.key]">Edit</a>
       </td>
     </tr>
   </tbody>

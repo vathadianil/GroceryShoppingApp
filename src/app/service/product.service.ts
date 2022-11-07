@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
+import {
+  AngularFireDatabase,
+  AngularFireList,
+} from '@angular/fire/compat/database';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
+  private productRef: AngularFireList<any>;
   constructor(private db: AngularFireDatabase) {}
 
   create(product) {
@@ -12,7 +17,14 @@ export class ProductService {
   }
 
   getAll() {
-    return this.db.list('/products').snapshotChanges();
+    this.productRef = this.db.list('/products');
+    return this.productRef.snapshotChanges().pipe(
+      map((changes) =>
+        changes.map((c) => {
+          return { key: c.payload.key, ...c.payload.val() };
+        })
+      )
+    );
   }
 
   get(productId) {
