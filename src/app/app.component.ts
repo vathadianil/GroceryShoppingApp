@@ -19,11 +19,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.authUserSubscription = this.auth.user$.subscribe((user) => {
-      if (user) {
-        this.userService.save(user);
-        let returnUrl = localStorage.getItem('returnUrl') || '/';
-        this.router.navigate([returnUrl]);
-      }
+      if (!user) return;
+      this.userService.save(user);
+      let returnUrl = localStorage.getItem('returnUrl');
+      if (!returnUrl) return;
+      localStorage.removeItem('returnUrl');
+      this.router.navigate([returnUrl]);
     });
   }
 

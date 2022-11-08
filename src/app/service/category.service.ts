@@ -8,7 +8,7 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 export class CategoryService {
   constructor(private db: AngularFireDatabase) {}
 
-  getCategories() {
+  getAll() {
     return this.db
       .list('/categories', (ref) => ref.orderByChild('name'))
       .snapshotChanges();
