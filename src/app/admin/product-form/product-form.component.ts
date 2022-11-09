@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { of, switchMap } from 'rxjs';
+import { Product } from 'src/app/models/product';
 import { CategoryService } from 'src/app/service/category.service';
 import { ProductService } from 'src/app/service/product.service';
 
@@ -10,14 +12,9 @@ import { ProductService } from 'src/app/service/product.service';
   styleUrls: ['./product-form.component.css'],
 })
 export class ProductFormComponent implements OnInit {
-  @ViewChild('f', { static: false }) productForm: NgForm;
+  @ViewChild('f', { static: true }) productForm: NgForm;
   categories$;
-  product = {
-    title: '',
-    price: 0,
-    category: '',
-    imageUrl: '',
-  };
+  product: Product;
   id;
   constructor(
     private categoryService: CategoryService,
@@ -29,33 +26,26 @@ export class ProductFormComponent implements OnInit {
   ngOnInit(): void {
     this.categories$ = this.categoryService.getAll();
 
-    this.id = this.route.snapshot.paramMap.get('id');
-    if (this.id) {
-      this.productService.get(this.id).subscribe((product: any) => {
-        this.product = product[0];
-        this.productForm.form.patchValue({
-          title: this.product?.title,
-          price: this.product?.price,
-          category: this.product?.category,
-          imageUrl: this.product?.imageUrl,
-        });
+    this.route.params
+      .pipe(
+        switchMap((params: Params) => {
+          this.id = params['id'];
+          if (this.id) return this.productService.get(this.id);
+          return of(null);
+        })
+      )
+      .subscribe((product: Product[]) => {
+        if (product) {
+          this.product = product[0];
+          this.productForm.form.patchValue({
+            title: this.product?.title,
+            price: this.product?.price,
+            category: this.product?.category,
+            imageUrl: this.product?.imageUrl,
+          });
+        }
       });
-    }
-    // this.route.params.subscribe((params) => {
-    //   let id = params['id'];
-    //   this.getProductByid(id);
-    // });
   }
-
-  // getProductByid(id) {
-  //   this.productService.get(id).subscribe((product: any) => {
-  //     console.log(product);
-  //     this.product = product;
-  //     this.productForm.form.patchValue({
-  //       title: product[0].title,
-  //     });
-  //   });
-  // }
 
   save(product) {
     if (this.id) {

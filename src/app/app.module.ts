@@ -21,6 +21,7 @@ import { LoginComponent } from './login/login.component';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { ProductFilterComponent } from './products/product-filter/product-filter.component';
+import { ProductCardComponent } from './product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ProductFilterComponent } from './products/product-filter/product-filter
     AdminOrdersComponent,
     ProductFormComponent,
     ProductFilterComponent,
+    ProductCardComponent,
   ],
   imports: [
     BrowserModule,

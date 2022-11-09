@@ -5,14 +5,7 @@
   <div class="col-9">
     <div class="row row-cols-3">
       <div class="col" *ngFor="let p of filteredProducts">
-        <div class="card m-3">
-          <img [src]="p.imageUrl" class="card-img-top img-fluid rounded" />
-          <div class="card-body">
-            <h5 class="card-title">{{ p.title }}</h5>
-            <p class="card-text">{{ p.price | currency: "USD" }}</p>
-            <a href="#" class="btn btn-primary">Add to Cart</a>
-          </div>
-        </div>
+        <app-product-card [product]="p" [showActions]="true"></app-product-card>
       </div>
     </div>
   </div>
