@@ -21,7 +21,6 @@ export class AdminAuthGaurdService implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    this.authService.appUsers$.pipe(map((user) => console.log(user)));
     return this.authService.appUsers$.pipe(map((user) => user.isAdmin));
   }
 }
