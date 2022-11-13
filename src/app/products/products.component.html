@@ -5,7 +5,11 @@
   <div class="col-9">
     <div class="row row-cols-3">
       <div class="col" *ngFor="let p of filteredProducts">
-        <app-product-card [product]="p" [showActions]="true"></app-product-card>
+        <app-product-card
+          [product]="p"
+          [showActions]="true"
+          [shoppingCart]="cart"
+        ></app-product-card>
       </div>
     </div>
   </div>
