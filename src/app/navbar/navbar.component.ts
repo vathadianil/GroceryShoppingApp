@@ -11,35 +11,33 @@ import { ShoppingCartService } from '../service/shopping-cart.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavbarComponent implements OnInit {
   appUser: AppUser;
-  appUserSubscription: Subscription;
+  // appUserSubscription: Subscription;
   totalQuantity: number = 0;
-  shoppingCartSubscription: Subscription;
+  // shoppingCartSubscription: Subscription;
   constructor(
     private authService: AuthService,
     private shoppingCartService: ShoppingCartService
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.appUserSubscription = this.authService.appUsers$.subscribe(
-      (appUser) => {
-        this.appUser = appUser;
+    this.authService.appUsers$.subscribe((appUser) => {
+      this.appUser = appUser;
+    });
+    (await this.shoppingCartService.getCart()).subscribe(
+      (items: ShoppingCart[]) => {
+        this.totalQuantity = new ShoppingCartItems(items).totalCartItems;
       }
     );
-    this.shoppingCartSubscription = (
-      await this.shoppingCartService.getCart()
-    ).subscribe((items: ShoppingCart[]) => {
-      this.totalQuantity = new ShoppingCartItems(items).totalCartItems;
-    });
   }
 
   logout() {
     return this.authService.logout();
   }
 
-  ngOnDestroy(): void {
-    this.appUserSubscription.unsubscribe();
-    this.shoppingCartSubscription.unsubscribe();
-  }
+  // ngOnDestroy(): void {
+  //   this.appUserSubscription.unsubscribe();
+  //   this.shoppingCartSubscription.unsubscribe();
+  // }
 }

@@ -10,6 +10,7 @@ import { Product } from '../models/product';
   providedIn: 'root',
 })
 export class ShoppingCartService {
+  isCreateCartCalled = false;
   private itemRef: AngularFireList<any>;
   private shoppingCartRef: AngularFireList<any>;
   constructor(private db: AngularFireDatabase) {}
@@ -39,9 +40,14 @@ export class ShoppingCartService {
   private async getOrCreateCartId(): Promise<string> {
     const cartId = localStorage.getItem('cartId');
     if (cartId) return cartId;
-    let result = await this.create();
-    localStorage.setItem('cartId', result.key);
-    return result.key;
+    if (!this.isCreateCartCalled) {
+      this.isCreateCartCalled = true;
+      let result = await this.create();
+      localStorage.setItem('cartId', result.key);
+      return result.key;
+    } else {
+      return '';
+    }
   }
 
   private create() {

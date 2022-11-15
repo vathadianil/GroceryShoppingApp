@@ -1,8 +1,7 @@
+import { Product } from './product';
+
 export class ShoppingCart {
   key: string;
-  title: string;
-  price: number;
-  category: string;
-  imageUrl: string;
+  product: Product;
   quantity: number;
 }
