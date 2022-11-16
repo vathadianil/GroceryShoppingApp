@@ -27,6 +27,7 @@ export class ProductCardComponent implements OnInit {
     const item = this.shoppingCart.filter((item) => {
       return item.key === this.product.key;
     });
+
     return item[0]?.quantity ? item[0]?.quantity : 0;
   }
 }

@@ -25,6 +25,17 @@ export class NavbarComponent implements OnInit {
     this.authService.appUsers$.subscribe((appUser) => {
       this.appUser = appUser;
     });
+
+    const cartIdInterval = setInterval(async () => {
+      let cartId = await this.shoppingCartService.getOrCreateCartId();
+      if (cartId) {
+        clearInterval(cartIdInterval);
+        this.getCartItem();
+      }
+    }, 1000);
+  }
+
+  async getCartItem() {
     (await this.shoppingCartService.getCart()).subscribe(
       (items: ShoppingCart[]) => {
         this.totalQuantity = new ShoppingCartItems(items).totalCartItems;

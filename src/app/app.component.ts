@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from './service/auth.service';
+import { ShoppingCartService } from './service/shopping-cart.service';
 import { UserService } from './service/user.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private auth: AuthService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private shoppingCartService: ShoppingCartService
   ) {}
 
   ngOnInit(): void {

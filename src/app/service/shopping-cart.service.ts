@@ -3,7 +3,7 @@ import {
   AngularFireDatabase,
   AngularFireList,
 } from '@angular/fire/compat/database';
-import { map, take } from 'rxjs';
+import { map, of, take } from 'rxjs';
 import { Product } from '../models/product';
 
 @Injectable({
@@ -11,6 +11,7 @@ import { Product } from '../models/product';
 })
 export class ShoppingCartService {
   isCreateCartCalled = false;
+  cartId: string;
   private itemRef: AngularFireList<any>;
   private shoppingCartRef: AngularFireList<any>;
   constructor(private db: AngularFireDatabase) {}
@@ -37,7 +38,7 @@ export class ShoppingCartService {
     this.updateQuantity(product, -1);
   }
 
-  private async getOrCreateCartId(): Promise<string> {
+  async getOrCreateCartId(): Promise<string> {
     const cartId = localStorage.getItem('cartId');
     if (cartId) return cartId;
     if (!this.isCreateCartCalled) {
@@ -46,7 +47,7 @@ export class ShoppingCartService {
       localStorage.setItem('cartId', result.key);
       return result.key;
     } else {
-      return '';
+      return cartId;
     }
   }
 
