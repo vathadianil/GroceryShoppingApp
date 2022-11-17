@@ -38,7 +38,9 @@ export class NavbarComponent implements OnInit {
   async getCartItem() {
     (await this.shoppingCartService.getCart()).subscribe(
       (items: ShoppingCart[]) => {
-        this.totalQuantity = new ShoppingCartItems(items).totalCartItems;
+        this.totalQuantity = new ShoppingCartItems(
+          items
+        ).totalCartItems.quantity;
       }
     );
   }
